@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyLibrary.Backend.API.DB;
 
@@ -11,9 +12,11 @@ using MyLibrary.Backend.API.DB;
 namespace MyLibrary.Backend.API.Migrations
 {
     [DbContext(typeof(MyLibraryDB))]
-    partial class MyLibraryDBModelSnapshot : ModelSnapshot
+    [Migration("20241031085753_FixName")]
+    partial class FixName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +36,7 @@ namespace MyLibrary.Backend.API.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("Titel")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Writer")

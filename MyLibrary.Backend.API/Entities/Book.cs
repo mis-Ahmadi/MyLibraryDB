@@ -8,7 +8,7 @@ namespace MyLibrary.Backend.API.Entities
 {
     public class Book:Thing
     {
-        public string? Titel { get; set; }
+        public string? Title { get; set; }
         public string? Writer { get; set; }
         public double Price { get; set; }
     }

@@ -11,8 +11,19 @@ builder.Services.AddDbContext<MyLibraryDB>(Options =>
 {
     Options.UseSqlServer(builder.Configuration.GetConnectionString("MainDB"));
 });
-var app = builder.Build();
+builder.Services.AddCors(Options =>
+{
+    Options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowAnyOrigin();
 
+    });
+
+});
+var app = builder.Build();
+app.UseCors();
 
 if (app.Environment.IsDevelopment())
 {
