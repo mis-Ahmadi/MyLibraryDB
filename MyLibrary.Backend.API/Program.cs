@@ -20,9 +20,19 @@ builder.Services.AddCors(Options =>
             .AllowAnyOrigin();
 
     });
-
 });
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
+builder.Services.AddIdentityApiEndpoints<LibraryUser>(Options =>
+{
+    Options.Password.RequireDigit = false;
+    Options.Password.RequireLowercase = false;
+    Options.Password.RequireUppercase = false;
+})
+    .AddEntityFrameworkStores<MyLibraryDB>();
 var app = builder.Build();
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseCors();
 
 if (app.Environment.IsDevelopment())
@@ -32,6 +42,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.MapIdentityApi<LibraryUser>();
 app.MapPost("/books/add", (MyLibraryDB db, Book book) =>
 {
     db.Books.Add(book);
@@ -40,8 +51,6 @@ app.MapPost("/books/add", (MyLibraryDB db, Book book) =>
 app.MapGet("/books/list", (MyLibraryDB db) =>
 {
     return db.Books.ToList();
-
-
 });
 app.MapPost("/books/update", (MyLibraryDB db, Book book) =>
 {
